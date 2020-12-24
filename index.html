@@ -14,9 +14,9 @@
 		<div id="app">
 			<template>
 				<h1>台北榮耀堂敬拜團服事表</h1>
-				<table class="table">
+				<table class="table table-hover table-responsive table-striped">
 					<thead>
-						<tr>
+						<tr class="table-warning">
 							<th scope="col">日期</th>
 							<th scope="col">主領</th>
 							<th scope="col">歌手</th>
@@ -27,14 +27,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th scope="row">10/3-4中秋連假</th>
-							<td>123</td>
-							<td>223</td>
-							<td>323</td>
-							<td>423</td>
-							<td>523</td>
-							<td>623</td>
+						<tr v-for="(item, index) in data" :key="index">
+							<template v-if="item.gs$cell.row==1">
+								<th scope="col">{{item.gs$cell.$t}}</th>
+								<td>123</td>
+								<td>223</td>
+								<td>323</td>
+								<td>423</td>
+								<td>523</td>
+								<td>623</td>
+							</template>
 						</tr>
 					</tbody>
 				</table>
@@ -68,7 +70,8 @@
 				el: '#app',
 				data() {
 					return {
-						schedule: [],
+						data: [],
+						schedule: '',
 						voices: [
 							{
 								leader: '陳姊妹',
@@ -86,19 +89,31 @@
 						],
 					};
 				},
+				computed: {},
 				created() {
 					axios.get(worshipLeader).then((res) => {
-						this.schedule = res.data.feed.entry;
+						this.data = res.data.feed.entry;
+						// console.log(this.data);
+						this.getSchedule();
 					});
 				},
 				methods: {
 					getSchedule(item) {
-						// console.log(item);
-						let obj = item;
-						// console.log(obj);
-						if (obj.row == 1) {
-							return obj.$t;
-						}
+						this.schedule = '';
+						this.data.forEach((item) => {
+							console.log(item);
+							let obj = item;
+							if (obj.row == 1) {
+								this.schedule = item.$t;
+							}
+						});
+						return this.schedule;
+						// return this.schedule;
+						// let obj = item;
+						// // console.log(obj);
+						// if (obj.row == 1) {
+						// 	return obj.$t;
+						// }
 					},
 					getLeader(item) {
 						let row = item.row;
