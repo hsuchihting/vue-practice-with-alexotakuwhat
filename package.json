@@ -1,0 +1,21 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "api postman practice",
+  "scripts": {
+    "json": "json-server --watch db.json --post 3000"
+  },
+  "author": "Tim",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.20.1",
+    "element-ui": "^2.14.1",
+    "json-server": "^0.16.2",
+    "vue": "^2.6.12"
+  },
+  "repository": {},
+  "devDependencies": {
+    "drag-tree-table": "^2.1.0"
+  }
+}

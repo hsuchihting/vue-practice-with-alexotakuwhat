@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/day5.css" />
+		<title>day5-formModel</title>
+	</head>
+	<body>
+		<div id="app">
+			<div class="container">
+				<div class="title">
+					<div class="input">
+						<p>名字：{{name}}</p>
+						<p>性別：{{gender}}</p>
+						<p>年齡：{{age}}</p>
+						<p>興趣：{{hobbit.join('、')}}</p>
+						<p>是否為直播主：{{member?'是':'否'}}</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="menu">
+				<p class="title">
+					名字：
+					<input v-model="name" />
+				</p>
+
+				<p class="title">
+					性別： <input type="radio" value="男" v-model="gender" />男
+					<input type="radio" value="女" v-model="gender" />女
+				</p>
+
+				<p class="title">
+					年齡：
+					<select v-model="age">
+						<option>20~30 歲</option>
+						<option>31~40 歲</option>
+						<option>41~50 歲</option>
+						<option>51~60 歲</option>
+					</select>
+				</p>
+
+				<p class="title">
+					興趣：
+					<input type="checkbox" v-model="hobbit" value="唱歌" />唱歌
+					<input type="checkbox" v-model="hobbit" value="運動" />運動
+					<input type="checkbox" v-model="hobbit" value="旅行" />旅行
+				</p>
+
+				<p class="title">
+					是否為直播主：
+					<input type="checkbox" v-model="member" />加入
+				</p>
+			</div>
+		</div>
+
+		<!-- javascript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+		<script src="js/day5.js"></script>
+	</body>
+</html>

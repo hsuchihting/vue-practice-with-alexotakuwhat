@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/day8.css" />
+		<title>day8</title>
+	</head>
+	<body>
+		<div id="app">
+			<div class="container">
+				<form>
+					<select v-model="input.type">
+						<option :value="null" disabled>--請選擇--</option>
+						<option
+							v-for="(item, index) in typeList.sort"
+							:key="index"
+						>
+							{{item}}
+						</option>
+					</select>
+
+					<select v-model="input.title">
+						<option :value="null" disabled>--請選擇--</option>
+						<option
+							v-for="(item, index) in titleList.sort"
+							:key="index"
+						>
+							{{item}}
+						</option>
+					</select>
+				</form>
+				<!-- 有 content 才跑資料 -->
+				<div class="description">
+					<div class="menuItem" v-if="content">
+						<p class="number">{{content.index + 1}}</p>
+						<a class="title" :href="content.link"
+							>{{content.link}}</a
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- javascript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+		<script src="js/day8.js"></script>
+	</body>
+</html>

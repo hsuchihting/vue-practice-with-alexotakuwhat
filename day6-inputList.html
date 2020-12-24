@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/day6.css" />
+		<title>day6</title>
+	</head>
+	<body>
+		<div id="app">
+			<div class="container">
+				<form>
+					<select v-model="input.type">
+						<option>項目一</option>
+						<option>項目二</option>
+						<option>項目三</option>
+					</select>
+
+					<input
+						type="text"
+						v-model.trim="input.title"
+						@keyup.enter="inputHandler"
+					/>
+				</form>
+
+				<div class="menu">
+					<div
+						class="menuItem"
+						v-for="(item, index) in menu"
+						:key="index"
+					>
+						<p class="number">{{index+1}}</p>
+						<p class="type">{{item.type}}</p>
+						<a :href="item.link">{{item.title}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- javascript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+		<script src="js/day6.js"></script>
+	</body>
+</html>

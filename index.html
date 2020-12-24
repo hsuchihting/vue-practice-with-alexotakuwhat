@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>worship data practice</title>
+		<link rel="stylesheet" href="css/worship.css" />
+	</head>
+	<body>
+		<div id="app">
+			<template>
+				<h1>台北榮耀堂敬拜團服事表</h1>
+
+				<div class="list">
+					<div class="dateList">
+						<h2>時間</h2>
+						<div v-for="item in schedule">
+							<p class="date">{{getDate(item.gs$cell)}}</p>
+						</div>
+					</div>
+					<div class="nameList">
+						<h2>主領</h2>
+						<div v-for="item in schedule">
+							<p class="leaderName">{{getLeader(item.gs$cell)}}</p>
+						</div>
+					</div>
+				</div>
+			</template>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+
+		<script>
+			let worshipLeader =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/1/public/values?alt=json';
+			let vocal =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/2/public/values?alt=json';
+			let kb =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/3/public/values?alt=json';
+			let eg =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/4/public/values?alt=json';
+			let sax =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/5/public/values?alt=json';
+			let choir1 =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/6/public/values?alt=json';
+			let choir2 =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/7/public/values?alt=json';
+			let drum =
+				'https://spreadsheets.google.com/feeds/cells/1VS99Gh0lN_cYZsaTe7cTxTPVTnT0e4p_rYAE1cSb8cU/8/public/values?alt=json';
+
+			let data =
+				'https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-069?Authorization=CWB-08737147-8E37-4BCD-8118-2014EF09BC45';
+			//vue
+			let vm = new Vue({
+				el: '#app',
+				data() {
+					return {
+						schedule: [],
+						data: [],
+					};
+				},
+				created() {
+					axios.get(worshipLeader).then((res) => {
+						this.schedule = res.data.feed.entry;
+					});
+			
+				},
+				methods: {
+					getDate(item) {
+						// console.log(item);
+						let obj = item;
+						// console.log(obj);
+						if (obj.row == 1) {
+							return obj.$t;
+						}
+					},
+					getLeader(item) {
+						let row = item.row;
+						let col = item.col;
+						let name = item.$t;
+						// console.log(row, col, name);
+						let leader = new Array();
+
+						for (let i = 0; i < 10; i++) {
+							leader[i] = new Array();
+							for (let j = 0; j < 10; j++) {
+								leader[i][j] = 0;
+							}
+						}
+						console.log(leader);
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

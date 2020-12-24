@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="css/day4.css" />
+		<title>day4-changeOption</title>
+	</head>
+	<body>
+		<div id="app">
+			<div class="container">
+				<img :src="src" />
+				<h1>{{title}}</h1>
+			</div>
+
+			<div class="container">
+				<div class="option">
+					<!-- 若不是第一天就顯示 -->
+					<!-- index != 0 -->
+					<a
+						v-if="index > 0"
+						href="#"
+						@click.prevent="changePage(-1) "
+						><i class="fas fa-caret-left fa-2x"></i
+					></a>
+					<div class="optionTitle">
+						<span class="number">{{index+1 }}</span>
+						<span class="type">{{today.type}}</span>
+						<span class="title">{{today.title}}</span>
+						<a :href="today.link"></a>
+					</div>
+					<!-- 若不是最後一天就顯示 -->
+					<!-- index != total -1 -->
+					<a
+						v-if="index !== total -1"
+						href="#"
+						@click.prevent="changePage(1)"
+						><i class="fas fa-caret-right fa-2x"></i
+					></a>
+				</div>
+			</div>
+		</div>
+
+		<!-- javascript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+		<script src="js/day4.js"></script>
+	</body>
+</html>

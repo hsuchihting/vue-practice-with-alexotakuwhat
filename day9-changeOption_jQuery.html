@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="css/day9jquery.css" />
+		<title>day9-2 changeOption_jQuery</title>
+	</head>
+	<body>
+		<div id="app">
+			<div class="container">
+				<img :src="src" />
+				<h1>{{title}}</h1>
+			</div>
+
+			<div class="container">
+				<div class="option">
+					<!-- 若不是第一天就顯示 -->
+					<!-- index != 0 -->
+					<a
+						v-if="index > 0"
+						href="#"
+						@click.prevent="changePage(-1) "
+						><i class="fas fa-caret-left fa-2x"></i
+					></a>
+					<!-- jquery 動畫 -->
+					<transition
+						@before-enter="beforeEnterHandler"
+						@enter="enterHandler"
+						@after-enter="afterEnterHandler"
+						@enter-canceled="afterEnterHandler"
+						@before-leave="beforeLeaveHandler"
+						@leave="leaveHandler"
+						@after-leave="afterLeaveHandler"
+						@leave-canceled="afterLeaveHandler"
+						mode="out-in"
+						appear
+						:css="false"
+					>
+						<div
+							class="optionTitle"
+							v-for="(item, i) in menu"
+							:key="item.title"
+							v-if="index === i"
+						>
+							<span class="number">{{i+1 }}</span>
+							<span class="type">{{item.type}}</span>
+							<span class="title">{{item.title}}</span>
+							<a :href="item.link"></a>
+						</div>
+						<!-- 若不是最後一天就顯示 -->
+						<!-- index != this.menu.length -->
+					</transition>
+
+					<a
+						v-if="index !== total -1"
+						href="#"
+						@click.prevent="changePage(1)"
+						><i class="fas fa-caret-right fa-2x"></i
+					></a>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+		<!-- javascript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+		<script src="js/day9jquery.js"></script>
+	</body>
+</html>

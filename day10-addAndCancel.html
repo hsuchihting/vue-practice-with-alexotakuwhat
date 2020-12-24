@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/day10.css" />
+		<title>add and cancel feature</title>
+	</head>
+	<body>
+		<div id="app">
+			<div class="container">
+				<div class="inputGroup">
+					<label
+						>姓名：
+						<input
+							type="text"
+							v-model.trim="input.name"
+							placeholder="請輸入姓名"
+						/>
+					</label>
+
+					<label
+						>信箱：
+						<input
+							type="email"
+							v-model.trim="input.email"
+							placeholder="請輸入密碼"
+						/>
+					</label>
+					<button class="btn btnSubmit" @click="submitHandler">
+						送出
+					</button>
+					<button class="btn btnCancel" @click="cancelHandler">
+						取消
+					</button>
+				</div>
+			</div>
+
+			<div class="container">
+				<div
+					class="menuItem"
+					v-for="(item, index) in contacts"
+					:key="index"
+				>
+					<p class="index">{{item.id}}</p>
+					<p class="name">{{item.name}}</p>
+					<p class="type">{{item.email}}</p>
+					<button class="btn btnEdit" @click="editHandler(index)">修改</button>
+					<button class="btn btnDelete" @click="deleteHandler(index)">
+						刪除
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- javascript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.js"></script>
+		<script src="js/day10.js"></script>
+	</body>
+</html>
