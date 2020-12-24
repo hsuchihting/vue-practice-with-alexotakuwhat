@@ -27,15 +27,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(item, index) in data" :key="index">
-							<template v-if="item.gs$cell.row==1">
-								<th scope="col">{{item.gs$cell.$t}}</th>
-								<td>123</td>
-								<td>223</td>
-								<td>323</td>
-								<td>423</td>
-								<td>523</td>
-								<td>623</td>
+						<tr v-for="(date, index) in dates" :key="index">
+							<template v-if="index > 0">
+								<th scope="col">{{ date }}</th>
+								<td>{{ candidates(worshipTable, index) }}</td>
+								<td>{{ candidates(vocalTable, index) }}</td>
+								<td>{{ candidates(keyboardTable, index) }}</td>
+								<td>{{ candidates(elecGuitarTable, index) }}</td>
+								<td>{{ candidates(drummerTable, index) }}</td>
+								<td>{{ candidates(saxTable, index) }}</td>
 							</template>
 						</tr>
 					</tbody>
@@ -71,6 +71,13 @@
 				data() {
 					return {
 						data: [],
+						dates: [],
+						worshipTable: [],
+						vocalTable: [],
+						keyboardTable: [],
+						elecGuitarTable: [],
+						drummerTable: [],
+						saxTable: [],
 						schedule: '',
 						voices: [
 							{
@@ -87,15 +94,83 @@
 								sax: '蕭弟兄',
 							},
 						],
+						table: []
 					};
 				},
-				computed: {},
 				created() {
-					axios.get(worshipLeader).then((res) => {
-						this.data = res.data.feed.entry;
-						// console.log(this.data);
-						this.getSchedule();
-					});
+					let apis = [
+						{
+							table: this.worshipTable,
+							url: worshipLeader 
+						},
+						{
+							table: this.vocalTable,
+							url: vocal 
+						},
+						{
+							table: this.keyboardTable,
+							url: kb 
+						},
+						{
+							table: this.elecGuitarTable,
+							url: eg 
+						},
+						{
+							table: this.drummerTable,
+							url: drum 
+						},
+						{
+							table: this.saxTable,
+							url: sax 
+						}
+					];
+
+					apis.forEach((item) => {
+						axios.get(item.url)
+							.then(({data}) => {
+								this.createEmptyArray(item.table, data.feed.entry)
+
+								return data
+							})
+							.then((data) => {
+								this.fillIn(item.table, data.feed.entry)
+
+								return data
+							})
+							.then(() => {
+								this.dates = this.worshipTable.map((item, index) => {
+									return item[0]
+								})
+
+								this.$forceUpdate()
+							})
+							.catch(() => {
+								console.warn(item.url + ' table 不存在哦')
+							})
+					})
+
+
+					// axios.get(worshipLeader).then(({ data }) => {
+					// 	this.createEmptyArray(this.worshipTable, data.feed.entry)
+
+					// 	return data
+
+					// 	// this.data = res.data.feed.entry;
+					// 	// console.log(this.data);
+					// 	// this.getSchedule();
+					// })
+					// .then((data) => {
+					// 	this.fillIn(this.worshipTable, data.feed.entry)
+
+					// 	return data
+					// })
+					// .then(() => {
+					// 	this.dates = this.worshipTable.map((item, index) => {
+					// 		return item[0]
+					// 	})
+
+					// 	this.$forceUpdate()
+					// });
 				},
 				methods: {
 					getSchedule(item) {
@@ -130,6 +205,40 @@
 						}
 						console.log(leader);
 					},
+					createEmptyArray(table, entries) {
+						let maxCol = 0
+						let maxRow = 0
+
+						entries.forEach((item) => {
+							if (item.gs$cell.col > maxCol) {
+								maxCol = parseInt(item.gs$cell.col)
+							}
+
+							if (item.gs$cell.row > maxRow) {
+								maxRow = parseInt(item.gs$cell.row)
+							}
+						})
+
+						for (let i = 0 ; i < maxCol ; i++) {
+							table.push(Array(maxRow).fill('1'))
+						}
+					},
+					fillIn(table, entries) {
+						entries.forEach((item) => {
+							table[item.gs$cell.col - 1][item.gs$cell.row - 1] = item.gs$cell.$t
+						})
+					},
+					candidates(table, index) {
+						let pool = []
+
+						for (let i in table[index]) {
+							if (table[index][i] == '1') {
+								pool.push(table[0][i])
+							}
+						}
+
+						return pool.join(', ')
+					}
 				},
 			});
 		</script>
