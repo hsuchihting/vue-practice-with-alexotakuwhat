@@ -205,6 +205,7 @@
 						}
 						console.log(leader);
 					},
+					// 建立空陣列
 					createEmptyArray(table, entries) {
 						let maxCol = 0
 						let maxRow = 0
@@ -223,11 +224,13 @@
 							table.push(Array(maxRow).fill('1'))
 						}
 					},
+					// 過門 (填值)
 					fillIn(table, entries) {
 						entries.forEach((item) => {
 							table[item.gs$cell.col - 1][item.gs$cell.row - 1] = item.gs$cell.$t
 						})
 					},
+					// 找到可用的人選
 					candidates(table, index) {
 						let pool = []
 
