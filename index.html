@@ -14,14 +14,32 @@
 				<div class="list">
 					<div class="dateList">
 						<h2>時間</h2>
-						<div v-for="item in schedule">
-							<p class="date">{{getDate(item.gs$cell)}}</p>
+						<div v-for="(item, index) in schedule" :key="index">
+							<p class="date">{{item.gs$cell}}</p>
 						</div>
 					</div>
 					<div class="nameList">
-						<h2>主領</h2>
-						<div v-for="item in schedule">
-							<p class="leaderName">{{getLeader(item.gs$cell)}}</p>
+						<h2>人員</h2>
+						<div v-for="(item, index) in voices" :key="index">
+							主領：
+							<p>{{item.leader}}</p>
+							歌手：
+							<p>{{item.vocal}}</p>
+							詩班：
+							<p>{{item.choir}}</p>
+						</div>
+					</div>
+					<div class="musicians">
+						<h2>樂手</h2>
+						<div v-for="(item, index) in musicians" :key="index">
+							鍵盤：
+							<p>{{item.keyboardist}}</p>
+							電吉他：
+							<p>{{item.eleGuitar}}</p>
+							鼓手：
+							<p>{{item.drummer}}</p>
+							薩克斯風：
+							<p>{{item.sax}}</p>
 						</div>
 					</div>
 				</div>
@@ -56,17 +74,30 @@
 				data() {
 					return {
 						schedule: [],
-						data: [],
+						voices: [
+							{
+								leader: '陳姊妹',
+								vocal: ['許弟兄', '蔡姊妹'],
+								choir: ['王弟兄', '陳弟兄'],
+							},
+						],
+						musicians: [
+							{
+								keyboardist: ['蕭弟兄', '林弟兄'],
+								eleGuitar: '黃弟兄',
+								drummer: '楊姊妹',
+								sax: '蕭弟兄',
+							},
+						],
 					};
 				},
 				created() {
 					axios.get(worshipLeader).then((res) => {
 						this.schedule = res.data.feed.entry;
 					});
-			
 				},
 				methods: {
-					getDate(item) {
+					getSchedule(item) {
 						// console.log(item);
 						let obj = item;
 						// console.log(obj);
@@ -92,5 +123,12 @@
 				},
 			});
 		</script>
+
+		<style lang="scss">
+			.nameList,
+			.musicians {
+				display: flex;
+			}
+		</style>
 	</body>
 </html>
