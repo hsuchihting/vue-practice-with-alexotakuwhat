@@ -4,27 +4,7 @@
   list-style: none;
 }
 
-.list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.list .date {
-  font-weight: bold;
-}
-
-.list .nameList {
-  margin-left: 10rem;
-}
-
-.list .nameList .leaderName {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.list .date,
-.list .leaderName {
-  line-height: 3;
+th,
+td {
+  padding: 10rem 0;
 }
